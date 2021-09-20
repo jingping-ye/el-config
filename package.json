@@ -3,12 +3,12 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "lib": "vue-cli-service build --target lib --name comp-lib-design --dest lib packages/index.js",
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
     "lint": "vue-cli-service lint",
     "build:docs": "vuepress build docs cross-env NODE_ENV=production",
     "dev:docs": "vuepress dev docs cross-env NODE_ENV=development",
+    "lib": "vue-cli-service build --target lib --name comp-lib-design --dest lib packages/index.js",
     "cz": "npm run log && git add . && git cz",
     "log": "conventional-changelog --config ./node_modules/vue-cli-plugin-commitlint/lib/log -i CHANGELOG.md -s -r 0"
   },
@@ -45,14 +45,15 @@
     }
   },
   "husky": {
-    "lint-staged": {
-      "src/**/*.{js,vue}": [
-        "vue-cli-service lint",
-        "git add"
-      ]
-    },
     "hooks": {
+      "pre-commit": "lint-staged",
       "commit-msg": "commitlint -E HUSKY_GIT_PARAMS"
     }
+  },
+  "lint-staged": {
+    "src/**/*.{js,vue}": [
+      "vue-cli-service lint",
+      "git add"
+    ]
   }
 }
